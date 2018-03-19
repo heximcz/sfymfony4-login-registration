@@ -18,7 +18,7 @@ Can I try it? Yeees, go to [symfony4-login-register.hexim.cz](https://symfony4-l
 - 1 step
 ```
 git clone <this repo>
-cd ./sf4-login-registration
+cd ./symfony4-login-registration
 composer install --no-dev --optimize-autoloader
 ```
 

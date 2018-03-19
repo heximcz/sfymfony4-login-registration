@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}Log out{% endblock %}
+{% block body %}
+<div class="card mt-2">
+    <div class="card-body">
+        <h5 class="card-title">{{ 'title.logout_success'|trans }}</h5>
+        <a href="{{ path('app_homepage') }}" class="btn btn-primary btn-lg active"><i class="fa fa-home" aria-hidden="true"></i> {{ 'button.home'|trans }}</a>
+        <a href="{{ path('security_login') }}" class="btn btn-secondary btn-lg active"><i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'button.login'|trans }}</a>
+    </div>
+</div>
+{% endblock %}

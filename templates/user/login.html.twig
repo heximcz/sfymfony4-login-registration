@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}Sign in{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login-form.css') }}">
+{% endblock %}
+{% block body %}
+    {% include '_flash-messages.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'form-signin'}}) }}
+    <img class="mb-4 my-4" src="{{ asset('images/square-logo-72.png') }}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'header.login'|trans }}</h1>
+    {{ form_label(form._username, 'title.email', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form._username, {'attr': {'class': 'form-control', 'placeholder': 'title.email'}}) }}
+    {{ form_label(form._password, 'title.password', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form._password, {'attr': {'class': 'form-control', 'placeholder': 'title.password'}}) }}
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" id="remember_me" name="_remember_me" checked /> {{ 'checkbox.remember_me'|trans }}
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'button.login'|trans }}</button>
+    <div class="small mt-2">
+        <a href="{{ path('user_register') }}">{{ 'title.new_registration'|trans }}</a>
+        &nbsp;&nbsp;
+        <a href="{{ path('password_restoration') }}">{{ 'title.renew_password'|trans }}</a>
+    </div>
+    {% if csrf_token('authenticate') %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    {% endif %}
+    {{ form_end(form) }}
+{% endblock %}

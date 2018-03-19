@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/themes/fixed-menu/style.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/custom/custom.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/layouts/page-center.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('vendors/perfect-scrollbar/perfect-scrollbar.css') }}" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="https://use.fontawesome.com/733babeda0.js"></script>
+{% endblock %}
+
+{% block body %}
+    <body class="cyan">
+
+    {% block user_form %}{% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('vendors/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/custom-script.js') }}"></script>
+{% endblock %}

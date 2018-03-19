@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Error - Email not confirmed{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/resend-confirmation-form.css') }}">
+{% endblock %}
+{% block body %}
+    {% include '_flash-messages.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'form-signin', 'novalidate': 'novalidate'}}) }}
+    <img class="mb-4 my-4" src="{{ asset('images/square-logo-72.png') }}" alt="" width="72" height="72">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ 'email.not-confirmed'|trans }}</h5>
+            <p class="card-text">{{ 'text.email_confirmate'|trans }}</p>
+            <p class="card-text">{{ 'text.email_new_confirmate'|trans }}</p>
+        </div>
+    </div>
+    {{ form_label(form.email, 'title.email', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'title.email', 'autofocus': 'autofocus'}}) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'button.resend'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}

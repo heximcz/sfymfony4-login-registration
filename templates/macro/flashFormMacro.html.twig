@@ -1,0 +1,23 @@
+{% macro flashForm(form) %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {# CSRF token errors #}
+        {% if form.vars.errors is defined and form.vars.errors is not empty %}
+            {{ form.vars.errors }}<br/>
+        {% endif %}
+        {# other error messages#}
+        {% for child in form.children %}
+            {% for error in child.vars.errors %}
+                {{ error.message }}<br/>
+            {% endfor %}
+            {# uniq: password is next subchild #}
+            {% if child.children['first'] is defined %}
+                {% for pwdError in child.children['first'].vars.errors %}
+                    {{ pwdError.message }}<br/>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endmacro %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}New registration{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/register-form.css') }}">
+{% endblock %}
+{% block body %}
+    {% include '_flash-messages.html.twig' %}
+    {{ form_start(form, {'attr': {'class': 'form-register', 'novalidate': 'novalidate'}}) }}
+    <img class="mb-4 my-4" src="{{ asset('images/square-logo-72.png') }}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'header.register'|trans }}</h1>
+    {{ form_label(form.userName, 'title.username', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.userName, {'attr': {'class': 'form-control', 'placeholder': 'title.username', 'autofocus': 'autofocus'}}) }}
+    {{ form_label(form.email, 'title.email', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'title.email'}}) }}
+    {{ form_label(form.plainPassword.first, 'title.password', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'title.password'}}) }}
+    {{ form_label(form.plainPassword.second, 'title.repeat_password', {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control form-secpasswd', 'placeholder': 'title.repeat_password'}}) }}
+    <button class="btn btn-primary btn-lg active btn-block" type="submit">{{ 'button.register'|trans }}</button>
+    <p class="mt-2 mb-2">{{ 'text.or'|trans }}</p>
+    <a href="{{ path('security_login') }}" class="btn btn-secondary btn-lg active btn-block">{{ 'button.login'|trans }}</a>
+    <div class="card mt-2">
+        <div class="card-body small">
+            {{ 'user.registration_help'|trans|nl2br }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

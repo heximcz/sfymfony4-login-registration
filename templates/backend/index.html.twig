@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include '_flash-messages.html.twig' %}
+    <div class="mt-5">
+        <h1>Welcome {{ app.user.userName }}</h1>
+    </div>
+  {#
+        <div class="row">
+                <div class="col s12 m12 l12">
+                        <div class="card-panel">
+                                <blockquote>
+                                        <h4><i class="fa fa-shield blue-text"
+                                               aria-hidden="true"></i> {{ 'activity.header_log'|trans }}</h4>
+                                </blockquote>
+                        </div>
+                </div>
+        </div>
+
+        <div class="row">
+                <div class="col s12 m12 l12">
+                        <div class="card-panel">
+                                <div class="row">
+                                        <div class="col s12">
+                                                <div id="table-datatables">
+                                                        <h4 class="header">{{ 'title.activity_log'|trans }}</h4>
+                                                        <div class="row">
+                                                                <div class="col s12">
+                                                                        <table id="data-table-simple" class="responsive-table display" cellspacing="0">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                        <th>{{ 'activity.created_at'|trans }}</th>
+                                                                                        <th>{{ 'activity.address'|trans }}</th>
+                                                                                        <th>{{ 'activity.user_agent'|trans }}</th>
+                                                                                        <th>{{ 'activity.user_activity'|trans }}</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tfoot>
+                                                                                <tr>
+                                                                                        <th>{{ 'activity.created_at'|trans }}</th>
+                                                                                        <th>{{ 'activity.address'|trans }}</th>
+                                                                                        <th>{{ 'activity.user_agent'|trans }}</th>
+                                                                                        <th>{{ 'activity.user_activity'|trans }}</th>
+                                                                                </tr>
+                                                                                </tfoot>
+                                                                                <tbody>
+                                                                                {% for item in activity %}
+                                                                                        <tr>
+                                                                                                <td nowrap="nowrap">{{ item.createdAt|date("d.m. Y H:i:s", "Europe/Prague") }}</td>
+                                                                                                <td>{{ item.address }}</td>
+                                                                                                <td>{{ item.userAgent }}</td>
+                                                                                                <td>{{ item.activity }}</td>
+                                                                                        </tr>
+                                                                                {% endfor %}
+                                                                                </tbody>
+                                                                        </table>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <div class="row padding-4"></div>
+#}
+{% endblock %}

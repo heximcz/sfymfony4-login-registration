@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony 4 - Register and login example page.{% endblock %}
+
+{% block body %}
+    {% include '_flash-messages.html.twig' %}
+    <div class="jumbotron jumbotron-fluid mt-4">
+        <div class="container">
+            <h1 class="display-4">Symfony 4 is cool!</h1>
+            <p class="lead">How to register and login for beginners.</p>
+            <p>This is a simple example for beginners.</p>
+            <hr class="my-4">
+            <h3 class="mb-4">In this example you will find:</h3>
+            <p>
+                <a href="https://symfony.com/doc/current/security/guard_authentication.html" target="_blank">Custom Authentication System with Guard</a><br />
+                <a href="https://symfony.com/doc/current/security/entity_provider.html" target="_blank">Load Security Users from the Database (the Entity Provider)</a><br />
+                <a href="https://symfony.com/doc/current/security/user_checkers.html" target="_blank">Custom User Checkers</a><br />
+                <a href="https://symfony.com/doc/current/security/remember_me.html" target="_blank">"Remember Me" Login Functionality</a><br />
+                <a href="https://symfony.com/doc/current/security/csrf.html" target="_blank">CSRF Protection</a><br />
+                <a href="https://symfony.com/doc/current/security/form_login_setup.html" target="_blank">Traditional Login Form</a><br />
+                <a href="https://symfony.com/doc/current/translation.html" target="_blank">Translation</a><br />
+                and much more...
+            </p>
+            <p>
+            <a href="https://symfony.com/doc/current/security.html" target="_blank">Symfony 4 - Complete Security documentation</a><br />
+            </p>
+            <p class="lead mt-4">
+                <a class="btn btn-primary btn-lg" href="#" role="button">This code on GitHub</a>
+            </p>
+        </div>
+    </div>
+    <h2>Life cycle diagram</h2>
+    <div><img src="{{ asset('images/diagram.png') }}"></div>
+    <div class="my-4">&nbsp;</div>
+{% endblock %}
+{% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted"><a href="#" target="_blank">Github</a> | <a href="https://best-hosting.cz" target="_blank">BEST-HOSTING s.r.o.</a> </span>
+        </div>
+    </footer>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+{% endblock %}

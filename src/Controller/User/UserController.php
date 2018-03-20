@@ -231,7 +231,7 @@ class UserController extends AbstractController
 
             $this->userActivity->saveActivityFromRequest($this->userActivity::CHANGE_PWD_DONE, $client, $this->em, $request);
 
-            $this->addFlash('notice', 'flash.password_changed');
+            $this->addFlash('notice', 'text.password_changed');
 
             return $this->redirectToRoute('security_login');
         }

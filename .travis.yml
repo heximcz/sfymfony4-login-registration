@@ -23,7 +23,6 @@ env:
   - SYMFONY_VERSION="4.0.*" DB=mysql
 
 before-install:
-  - mysql -e 'set password for "root"@"localhost" = password("Pa33w0rd");' -uroot
   - composer self-update
 
 install:

@@ -10,6 +10,14 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
 matrix:
   fast_finish: true
   include:

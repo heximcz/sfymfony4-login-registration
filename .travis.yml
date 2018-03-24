@@ -31,9 +31,9 @@ env:
   - SYMFONY_VERSION="4.0.*" DB=mysql
 
 before-install:
-  - sudo mysql -u root -e 'CREATE DATABASE sf4reglogtest;'
-  - sudo mysql -u root -e "CREATE USER 'sf4reglogtest'@'localhost' IDENTIFIED BY 'sf4reglogtest';"
-  - sudo mysql -u root -e "GRANT ALL ON sf4reglogtest.* TO 'sf4reglogtest'@'localhost';"
+  - sudo mysql -e "CREATE DATABASE sf4reglogtest;"
+  - sudo mysql -e "CREATE USER 'sf4reglogtest'@'localhost' IDENTIFIED BY 'sf4reglogtest';"
+  - sudo mysql -e "GRANT ALL ON sf4reglogtest.* TO 'sf4reglogtest'@'localhost';"
   - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('TestPa33w0rd') where User='sf4reglogtest'; FLUSH PRIVILEGES;"
   - sudo mysql_upgrade
   - sudo service mysql restart

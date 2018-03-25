@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\User;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserTest extends WebTestCase
@@ -53,7 +54,7 @@ class UserTest extends WebTestCase
         );
     }
 
-    public function testUserLoginPageSendFormUnconfirmedUser()
+    public function testUserLoginPageSendFormLoginUnconfirmedUser()
     {
         $client = static::createClient();
 
@@ -87,7 +88,7 @@ class UserTest extends WebTestCase
 
     }
 
-    public function testUserLoginPageSendFormConfirmedUser()
+    public function testUserLoginPageSendFormLoginConfirmedUser()
     {
         $client = static::createClient();
 
@@ -172,7 +173,7 @@ class UserTest extends WebTestCase
         );
     }
 
-    public function testUserRegisterPageSendForm()
+    public function testUserRegisterPageSendValidForm()
     {
         $client = static::createClient();
 
@@ -202,6 +203,199 @@ class UserTest extends WebTestCase
 
     }
 
-    //        dump($client->getResponse()->getContent()); die;
+    public function testUserRegisterPageSendFormDuplicateUserNameAndEmailAndPasswordsMismatch()
+    {
+        $client = static::createClient();
+
+        // load fixtures
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+        $fixture = new UserFixtures($container->get('security.password_encoder'));
+        $fixture->load($entityManager);
+
+        $crawler = $client->request('GET', '/en/register');
+
+        $form = $crawler->selectButton('Register')->form();
+        $form['app_bundle_user_registration_form[userName]'] = 'John Doe';
+        $form['app_bundle_user_registration_form[email]'] = 'test@domain.com';
+        $form['app_bundle_user_registration_form[plainPassword][first]'] = 'Pa33word';
+        $form['app_bundle_user_registration_form[plainPassword][second]'] = 'Pa33w0rd';
+        $client->submit($form);
+        if ($client->getResponse()->isRedirect()) {
+            $client->followRedirect();
+        }
+        // check response code value
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // check info alert
+        $crawler = $client->getCrawler();
+        // check alerts
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Username does exist.")')->count(),
+            'Registration form wit alert "Username does exist."'
+        );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("This e-mail is currently in use.")')->count(),
+            'Registration form wit alert "This e-mail is currently in use."'
+        );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Passwords mismatch.")')->count(),
+            'Registration form wit alert "Passwords mismatch."'
+        );
+
+    }
+
+    public function testUserRegisterPageSendFormNoExistMxEmailDomain()
+    {
+        $client = static::createClient();
+
+        // load fixtures
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+        $fixture = new UserFixtures($container->get('security.password_encoder'));
+        $fixture->load($entityManager);
+
+        $crawler = $client->request('GET', '/en/register');
+
+        $form = $crawler->selectButton('Register')->form();
+        $form['app_bundle_user_registration_form[userName]'] = 'Test User';
+        $form['app_bundle_user_registration_form[email]'] = 'test@googlenx3e.com';
+        $form['app_bundle_user_registration_form[plainPassword][first]'] = 'Pa33w0rd';
+        $form['app_bundle_user_registration_form[plainPassword][second]'] = 'Pa33w0rd';
+        $client->submit($form);
+        if ($client->getResponse()->isRedirect()) {
+            $client->followRedirect();
+        }
+        // check response code value
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // check info alert
+        $crawler = $client->getCrawler();
+        // check alerts
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("This is not the correct e-mail format")')->count(),
+            'Registration form wit alert "This is not the correct e-mail format"'
+        );
+
+    }
+
+    public function testUserRegisterPageSendFormValidationPassword()
+    {
+        $client = static::createClient();
+
+        // load fixtures
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+        $fixture = new UserFixtures($container->get('security.password_encoder'));
+        $fixture->load($entityManager);
+
+        $crawler = $client->request('GET', '/en/register');
+
+        $form = $crawler->selectButton('Register')->form();
+        $form['app_bundle_user_registration_form[userName]'] = 'Test User';
+        $form['app_bundle_user_registration_form[email]'] = 'test@domain.com';
+        $form['app_bundle_user_registration_form[plainPassword][first]'] = 'p';
+        $form['app_bundle_user_registration_form[plainPassword][second]'] = 'p';
+        $client->submit($form);
+        if ($client->getResponse()->isRedirect()) {
+            $client->followRedirect();
+        }
+        // check response code value
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // check info alert
+        $crawler = $client->getCrawler();
+        // check alerts
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Password is too short.")')->count(),
+            'Registration form wit alert "Password is too short."'
+        );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Password must contain: a-z,A-Z,0-9")')->count(),
+            'Registration form wit alert "Password must contain: a-z,A-Z,0-9"'
+        );
+
+    }
+
+    public function testUserRegisterPageSendFormBlank()
+    {
+        $client = static::createClient();
+
+        // load fixtures
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+        $fixture = new UserFixtures($container->get('security.password_encoder'));
+        $fixture->load($entityManager);
+
+        $crawler = $client->request('GET', '/en/register');
+
+        $form = $crawler->selectButton('Register')->form();
+        $client->submit($form);
+        if ($client->getResponse()->isRedirect()) {
+            $client->followRedirect();
+        }
+        // check response code value
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // check info alert
+        $crawler = $client->getCrawler();
+        // check alerts
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Username cannot be blank.")')->count(),
+            'Registration form wit alert "Username cannot be blank."'
+        );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Insert your e-mail.")')->count(),
+            'Registration form wit alert "Insert your e-mail."'
+        );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Password cannot be empty.")')->count(),
+            'Registration form wit alert "Password cannot be empty."'
+        );
+
+    }
+
+    public function testUserAccountActivationPendingUser()
+    {
+        $client = static::createClient();
+
+        // load fixtures
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+        $fixture = new UserFixtures($container->get('security.password_encoder'));
+        $fixture->load($entityManager);
+        /** @var User $user */
+        $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'test@domain.com']);
+        // check instance of
+        $this->assertInstanceOf(User::class, $user);
+        $client->request('GET', '/en/account-activation/' . $user->getConfirmationToken());
+        if ($client->getResponse()->isRedirect()) {
+            $client->followRedirect();
+        }
+        // check response code value
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // check alert
+        $crawler = $client->getCrawler();
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html:contains("Your account has been activated. You can sign in.")')->count(),
+            'Registration form wit alert "Your account has been activated. You can sign in."'
+        );
+
+    }
+
+
+
+//dump($client->getResponse()->getContent());
 
 }

@@ -43,4 +43,26 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
+    public function testChangeLocaleEn()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/locale/en');
+
+        // check return code
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+    }
+
+    public function testChangeLocaleCs()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/locale/cs');
+
+        // check return code
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+    }
+
 }

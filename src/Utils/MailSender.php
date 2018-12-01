@@ -4,7 +4,7 @@ namespace App\Utils;
 
 use App\Entity\User;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MailSender
 {

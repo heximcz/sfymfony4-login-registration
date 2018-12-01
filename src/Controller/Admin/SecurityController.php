@@ -9,7 +9,8 @@ namespace App\Controller\Admin;
 use App\Exception\AccountNotConfirmed;
 use App\Form\LoginForm;
 use App\Utils\TokenGenerator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -32,6 +33,8 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/{_locale}/login", name="security_login")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function loginAction(Request $request)
     {

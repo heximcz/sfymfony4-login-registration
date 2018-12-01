@@ -15,7 +15,8 @@ use App\Utils\TokenGenerator;
 use App\Utils\UserActivityProcess;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -58,6 +59,8 @@ class UserController extends AbstractController
     /**
      * Registration
      * @Route("/{_locale}/register", name="user_register")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function registerAction(Request $request)
     {
@@ -100,6 +103,9 @@ class UserController extends AbstractController
     /**
      * Account activation
      * @Route("/{_locale}/account-activation/{slug}", name="account_activation", requirements={"slug"="([A-Za-z0-9-_]{43})"})
+     * @param Request $request
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function accountActivation(Request $request, $slug)
     {
@@ -125,6 +131,9 @@ class UserController extends AbstractController
     /**
      * "Error" page with form to resend confirmation link
      * @Route("/{_locale}/account-not-confirmed/{slug}", name="email_confirmation_error", requirements={"slug"="([A-Za-z0-9-_]{43})"})
+     * @param Request $request
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function accountIsNotConfirmed(Request $request, $slug)
     {
@@ -161,6 +170,8 @@ class UserController extends AbstractController
     /**
      * Restore password request
      * @Route("/{_locale}/password-restoration", name="password_restoration")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function passwordRestorationRequest(Request $request)
     {
@@ -201,6 +212,9 @@ class UserController extends AbstractController
     /**
      * Restore password form
      * @Route("/{_locale}/password-restoration/{slug}", name="password_change", requirements={"slug"="([A-Za-z0-9-_]{43})"})
+     * @param Request $request
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function passwordChange(Request $request, $slug)
     {
